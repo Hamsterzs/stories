@@ -3,9 +3,9 @@ const bcrypt = require("bcrypt")
 const passport = require("passport")
 
 
-exports.createUser = async (req, res, next) => {
+exports.createUser = async (req, res) => {
     try {
-        const existingUser = await User.find({ username: req.body.username })
+        const existingUser = await User.findOne({ username: req.body.username })
         if (existingUser) {
             res.status(400).json({ message: "Username Already Exists" })
             return
