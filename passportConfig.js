@@ -6,7 +6,6 @@ module.exports = (passport) => {
 
     passport.use(new LocalStrategy({ usernameField: "username" },
         (username, password, done) => {
-            console.log("in auth")
             User.findOne({ username: username }, async (err, user) => {
                 if (err) { return done(err, false, { message: "server error", status: 500 }) }
                 if (!user) {

@@ -10,7 +10,7 @@ exports.createUser = async (req, res) => {
         }
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
         const user = await User.create({ username: req.body.username, password: hashedPassword })
-        res.send(`hello ${req.body.username}`)
+        res.status(200).json(req.user)
     } catch (error) {
         console.log(error);
     }
