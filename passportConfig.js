@@ -8,7 +8,7 @@ module.exports = (passport) => {
         (username, password, done) => {
             console.log("in auth")
             User.findOne({ username: username }, async (err, user) => {
-                if (err) { return done(err, null, { message: "server error", status: 500 }) }
+                if (err) { return done(err, false, { message: "server error", status: 500 }) }
                 if (!user) {
                     return done(null, false, { message: 'Incorrect username.', status: 400 })
                 }
