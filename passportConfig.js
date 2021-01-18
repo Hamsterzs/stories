@@ -6,16 +6,17 @@ module.exports = (passport) => {
 
     passport.use(new LocalStrategy({ usernameField: "username" },
         (username, password, done) => {
+            console.log("in auth")
             User.findOne({ username: username }, async (err, user) => {
-                if (err) { return done(err) }
+                if (err) { return done(err, null, { message: "server error", status: 500 }) }
                 if (!user) {
-                    return done(null, false, { message: 'Incorrect username.' })
+                    return done(null, false, { message: 'Incorrect username.', status: 400 })
                 }
                 const valid = await bcrypt.compare(password, user.password)
                 if (!valid) {
-                    return done(null, false, { message: 'Incorrect password.' })
+                    return done(null, false, { message: 'Incorrect password.', status: 400 })
                 }
-                return done(null, user)
+                return done(null, user, { status: 200 })
             })
         }
     ))
