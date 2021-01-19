@@ -16,4 +16,6 @@ router.post("/sign-up",
 
 router.post("/sign-in", authenticate)
 
+router.post("/sign-out", UserController.signOut)
+
 module.exports = router

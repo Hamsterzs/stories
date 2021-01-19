@@ -15,3 +15,14 @@ exports.createUser = async (req, res, next) => {
         console.log(error);
     }
 }
+
+exports.signOut = (req, res) => {
+    try {
+        req.session.destroy(() => {
+            req.logOut()
+            res.status(200).json({ message: "logged out" })
+        })
+    } catch (error) {
+        res.status(500).json({ message: "server error" })
+    }
+}
