@@ -15,9 +15,7 @@ try {
     console.log(err)
 }
 
-
 app.use(express.json())
-
 
 const session = require("express-session")
 const MongoStore = require("connect-mongo")(session)
@@ -34,6 +32,7 @@ const passportConfig = require("./passportConfig")
 const passport = require("passport");
 
 passportConfig(passport)
+
 app.use(passport.initialize());
 app.use(passport.session());
 
