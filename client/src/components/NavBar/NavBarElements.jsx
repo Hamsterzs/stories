@@ -8,6 +8,9 @@ export const NavBar = styled.nav`
     margin: 0;
     display: flex;
     justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
     `
 export const NavWrapper = styled.div`
     width: 50vw;
@@ -49,7 +52,7 @@ export const ArrowStyled = styled(Arrow)`
 export const UserContainer = styled.div`
     width: 60px;
     height: 60px;
-    background-color:#686D76;
+    background-color:${({ user }) => user.username ? "#19D3DA" : "#686D76"};
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -70,9 +73,7 @@ export const ExtendedNav = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    transform: translateY(${({ toggle }) => toggle ? "0" : "calc(-100% - 100px)"});
+    transform: translateY(${({ toggle }) => toggle ? "100px" : "calc(-100% - 100px)"});
     transition: .5s;
-    position: relative;
-    z-index: -1;
 `
 

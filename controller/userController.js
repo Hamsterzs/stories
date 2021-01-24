@@ -26,3 +26,11 @@ exports.signOut = (req, res) => {
         res.status(500).json({ message: "server error" })
     }
 }
+
+exports.getUser = (req, res) => {
+    if (req.user) {
+        res.status(200).json({ user: req.user, message: "User Sent" })
+    } else {
+        res.status(400).json({ message: "User not signed in" })
+    }
+}

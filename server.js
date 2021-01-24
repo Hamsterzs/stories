@@ -1,5 +1,9 @@
 const express = require("express")
 const app = express()
+const cors = require('cors')
+
+app.use(cors())
+app.use(express.json())
 
 const mongoose = require('mongoose')
 
@@ -14,8 +18,6 @@ try {
 } catch (err) {
     console.log(err)
 }
-
-app.use(express.json())
 
 const session = require("express-session")
 const MongoStore = require("connect-mongo")(session)

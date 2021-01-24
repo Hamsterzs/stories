@@ -5,16 +5,20 @@ import Login from "../LoginBox/Login"
 import { ReactComponent as User } from "../../images/User.svg"
 import NavBarHook from "./NavBarHook"
 
-const NavBar = () => {
+const NavBar = ({ user }) => {
     const { toggle, changeToggle } = NavBarHook()
 
     return (
         <>
+            <ExtendedNav toggle={toggle ? 1 : undefined}>
+                <Login />
+            </ExtendedNav>
+
             <NavBarS>
                 <NavWrapper>
                     <Logo>Stories</Logo>
 
-                    <UserContainer>
+                    <UserContainer user={user}>
                         <User style={UserStyle} />
                     </UserContainer>
 
@@ -23,11 +27,6 @@ const NavBar = () => {
                     </ArrowContainer>
                 </NavWrapper >
             </NavBarS>
-
-            <ExtendedNav toggle={toggle ? 1 : undefined}>
-                <Login />
-            </ExtendedNav>
-
         </>
     )
 }

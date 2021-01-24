@@ -15,7 +15,7 @@ module.exports = (passport) => {
                 if (!valid) {
                     return done(null, false, { message: 'Incorrect password.', status: 400 })
                 }
-                return done(null, user, { status: 200 })
+                return done(null, user, { status: 200, message: 'Sign in succesfull' })
             })
         }
     ))
