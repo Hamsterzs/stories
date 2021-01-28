@@ -3,13 +3,7 @@ const UserController = require("../controller/userController")
 const passport = require("passport")
 
 
-router.post("/sign-up",
-    UserController.createUser,
-    passport.authenticate("local"),
-    UserController.getUser
-)
-
-router.post("/sign-in", (req, res) => {
+const authenticate = (req, res) => {
     passport.authenticate("local", (err, user, info) => {
         if (user) {
             req.logIn(user, err => {
@@ -18,8 +12,16 @@ router.post("/sign-in", (req, res) => {
         }
         res.status(info.status).json({ user: user, message: info.message })
     })(req, res)
+
 }
+
+router.post("/sign-up",
+    UserController.createUser,
+    authenticate,
+    UserController.getUser
 )
+
+router.post("/sign-in", authenticate)
 
 router.post("/sign-out", UserController.signOut)
 

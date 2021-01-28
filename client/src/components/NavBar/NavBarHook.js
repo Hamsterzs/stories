@@ -7,7 +7,6 @@ export const Logic = () => {
     const [user] = useContext(GlobalContext)
 
     const changeToggle = () => {
-        console.log(toggle);
         setToggle(!toggle)
     }
 

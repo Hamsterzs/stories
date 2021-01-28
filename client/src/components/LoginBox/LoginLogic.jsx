@@ -8,16 +8,21 @@ const LoginLogic = () => {
     const [user, setUser] = useContext(GlobalContext)
 
     const authenticate = async () => {
-        let user
+        let response
         if (operation === "logIn") {
-            user = await signIn(credentials.username, credentials.password)
+            response = await signIn(credentials.username, credentials.password)
         } else {
-            user = await signUp(credentials.username, credentials.password)
+            response = await signUp(credentials.username, credentials.password)
         }
+        if (response.user) {
+            setUser(response.user)
+        }
+        console.log(response.message);
     }
 
-    const logOut = async (setUser) => {
-        const response = await signOut()
+    const logOut = async () => {
+        await signOut()
+        setUser({})
     }
 
     return { operation, setOperation, setCredentials, authenticate, credentials, logOut, user }
