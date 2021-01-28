@@ -5,13 +5,13 @@ import Login from "../LoginBox/Login"
 import { ReactComponent as User } from "../../images/User.svg"
 import NavBarHook from "./NavBarHook"
 
-const NavBar = ({ user }) => {
-    const { toggle, changeToggle } = NavBarHook()
+const NavBar = () => {
+    const { toggle, changeToggle, user } = NavBarHook()
 
     return (
         <>
             <ExtendedNav toggle={toggle ? 1 : undefined}>
-                <Login />
+                <Login user={user} />
             </ExtendedNav>
 
             <NavBarS>

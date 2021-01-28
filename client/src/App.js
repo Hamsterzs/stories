@@ -1,25 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { NavBar } from "./components"
 import './App.css'
+import AppLogic from "./AppLogic"
 
 const App = () => {
-  const [user, setUser] = useState({})
-
-  useEffect(() => {
-    const getUser = async () => {
-      let response = await (await fetch("/api/get-user")).json()
-
-      if (response.user) {
-        setUser(response.user)
-        return
-      } else {
-        return
-      }
-    }
-
-    getUser()
-
-  }, [])
+  const { user } = AppLogic()
 
   return (
     <>

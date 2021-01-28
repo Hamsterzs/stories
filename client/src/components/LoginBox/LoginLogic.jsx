@@ -1,9 +1,11 @@
-import { useState } from 'react'
-import { signUp, signIn } from "../../apiCalls"
+import { useState, useContext } from 'react'
+import { signUp, signIn, signOut } from "../../apiCalls"
+import { GlobalContext } from "../../context"
 
 const LoginLogic = () => {
     const [operation, setOperation] = useState("home")
     const [credentials, setCredentials] = useState({ username: "", password: "" })
+    const [user, setUser] = useContext(GlobalContext)
 
     const authenticate = async () => {
         let user
@@ -12,10 +14,13 @@ const LoginLogic = () => {
         } else {
             user = await signUp(credentials.username, credentials.password)
         }
-        console.log(user);
     }
 
-    return { operation, setOperation, setCredentials, authenticate, credentials }
+    const logOut = async (setUser) => {
+        const response = await signOut()
+    }
+
+    return { operation, setOperation, setCredentials, authenticate, credentials, logOut, user }
 
 }
 

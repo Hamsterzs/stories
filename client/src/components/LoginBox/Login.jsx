@@ -1,10 +1,9 @@
 import React from 'react'
 import LoginLogic from "./LoginLogic"
 import { LoginBox, LoginButton, Input, BackButton } from "./LoginElements"
-import { authenticate } from 'passport'
 
 const Login = () => {
-    const { operation, setOperation, authenticate, setCredentials, credentials } = LoginLogic()
+    const { operation, setOperation, authenticate, setCredentials, credentials, logOut, user } = LoginLogic()
 
     const loginForm = {
         home: (
@@ -28,12 +27,15 @@ const Login = () => {
                 <LoginButton onClick={authenticate}>Log-In</LoginButton>
                 <BackButton onClick={() => setOperation("home")}>X</BackButton>
             </>
+        ),
+        logOut: (
+            <LoginButton onClick={logOut}>Log-Out</LoginButton>
         )
     }
 
     return (
         <LoginBox>
-            {loginForm[operation]}
+            {user.username ? loginForm["logOut"] : loginForm[operation]}
         </LoginBox>
     )
 }
