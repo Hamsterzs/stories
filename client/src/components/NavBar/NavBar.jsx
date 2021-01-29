@@ -1,12 +1,11 @@
 import React from 'react'
-import { NavBar as NavBarS, NavWrapper, Logo, UserContainer, } from "./NavBarElements"
-import { UserStyle, ExtendedNav, ArrowStyled, ArrowContainer } from "./NavBarElements"
+import { NavBar as NavBarS, NavWrapper, Logo, UserContainer, UserStyled } from "./NavBarElements"
+import { ExtendedNav, ArrowStyled, ArrowContainer } from "./NavBarElements"
 import Login from "../LoginBox/Login"
-import { ReactComponent as User } from "../../images/User.svg"
 import NavBarHook from "./NavBarHook"
 
 const NavBar = () => {
-    const { toggle, changeToggle, user } = NavBarHook()
+    const { toggle, changeToggle, user, userFunction } = NavBarHook()
 
     return (
         <>
@@ -18,8 +17,8 @@ const NavBar = () => {
                 <NavWrapper>
                     <Logo>Stories</Logo>
 
-                    <UserContainer user={user}>
-                        <User style={UserStyle} />
+                    <UserContainer user={user} onClick={userFunction}>
+                        <UserStyled />
                     </UserContainer>
 
                     <ArrowContainer>

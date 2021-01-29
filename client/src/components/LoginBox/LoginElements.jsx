@@ -11,6 +11,14 @@ export const LoginBox = styled.div`
     justify-content: center;
     align-items: center;
     position: relative;
+    @media (max-width: 450px){
+        width: 300px;
+        height: 250px;
+    }
+    @media (max-width: 350px){
+        width: 250px;
+        height: 200px;
+    }
 `
 
 const buttonWidth = "50%"

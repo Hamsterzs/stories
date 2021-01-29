@@ -10,7 +10,13 @@ export const Logic = () => {
         setToggle(!toggle)
     }
 
-    return { toggle, changeToggle, user }
+    const userFunction = () => {
+        if (!user.username) changeToggle()
+        else console.log("not yet implemented")
+        return
+    }
+
+    return { toggle, changeToggle, user, userFunction }
 }
 
 export default Logic
