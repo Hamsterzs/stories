@@ -1,7 +1,10 @@
 const router = require("express").Router()
-const UserController = require("../controller/userController")
-const passport = require("passport")
+const userController = require("../controller/userController")
+const storiesController = require("../controller/storiesController")
 
+//              User Routes
+
+const passport = require("passport")
 
 const authenticate = (req, res) => {
     passport.authenticate("local", (err, user, info) => {
@@ -16,15 +19,26 @@ const authenticate = (req, res) => {
 }
 
 router.post("/sign-up",
-    UserController.createUser,
+    userController.createUser,
     authenticate,
-    UserController.getUser
+    userController.getUser
 )
 
 router.post("/sign-in", authenticate)
 
-router.post("/sign-out", UserController.signOut)
+router.post("/sign-out", userController.signOut)
 
-router.get('/get-user', UserController.getUser)
+router.get('/get-user', userController.getUser)
+
+//              Stories Routes
+
+router.get("/stories", storiesController.getStories)
+
+router.get("/stories/:user", storiesController.getStoriesByUser)
+
+router.post("/stories", storiesController.postStory)
+
+router.delete("/stories/:id", storiesController.deleteStory)
+
 
 module.exports = router
