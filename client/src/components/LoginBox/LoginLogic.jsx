@@ -5,7 +5,7 @@ import { GlobalContext } from "../../context"
 const LoginLogic = () => {
     const [operation, setOperation] = useState("home")
     const [credentials, setCredentials] = useState({ username: "", password: "" })
-    const [user, setUser] = useContext(GlobalContext)
+    const { user, setUser } = useContext(GlobalContext)
 
     const authenticate = async () => {
         let response

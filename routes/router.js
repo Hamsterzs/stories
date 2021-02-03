@@ -38,7 +38,7 @@ router.get("/stories/:user", storiesController.getStoriesByUser)
 
 router.post("/stories", storiesController.postStory)
 
-router.delete("/stories/:id", storiesController.deleteStory)
+router.delete("/stories/:user", storiesController.deleteStory)
 
 
 module.exports = router

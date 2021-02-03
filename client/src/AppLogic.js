@@ -1,8 +1,9 @@
 import { useEffect, useContext } from "react"
 import { GlobalContext } from "./context"
+import { Story } from "./components"
 
 const AppLogic = () => {
-    const [user, setUser] = useContext(GlobalContext)
+    const { user, setUser, content, setContent } = useContext(GlobalContext)
 
     useEffect(() => {
         const getUser = async () => {
@@ -16,11 +17,27 @@ const AppLogic = () => {
             }
         }
 
+        const getStories = async () => {
+            let response = await (await fetch("/api/stories")).json()
+
+            if (response.length > 0) {
+                setContent(response)
+                return
+            } else {
+                return
+            }
+        }
+
         getUser()
+        getStories()
 
-    }, [setUser])
+    }, [setUser, setContent])
 
-    return { user, setUser }
+    const renderStories = () => {
+        return content.map(story => <Story title={story.user} text={story.story}></Story>)
+    }
+
+    return { user, setUser, renderStories }
 }
 
 export default AppLogic

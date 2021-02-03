@@ -4,7 +4,7 @@ import { GlobalContext } from "../../context"
 export const Logic = () => {
     const [toggle, setToggle] = useState(false)
 
-    const [user] = useContext(GlobalContext)
+    const { user } = useContext(GlobalContext)
 
     const changeToggle = () => {
         setToggle(!toggle)

@@ -12,6 +12,7 @@ export const NavBar = styled.nav`
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 30;
     @media (max-width:768px){
         height:110px;
     }
@@ -81,7 +82,7 @@ export const UserContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow-y: hidden;
     margin: 0;
     cursor: pointer;
     @media (max-width: 768px){
@@ -112,6 +113,8 @@ export const ExtendedNav = styled.div`
     align-items: center;
     transform: translateY(${({ toggle }) => toggle ? "100px" : "calc(-100% - 100px)"});
     transition: .5s;
+    position: absolute;
+    z-index: 20;
     @media (max-width: 350px){
         height: 60vh;
     }
