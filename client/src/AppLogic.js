@@ -36,7 +36,7 @@ const AppLogic = () => {
     }, [setUser, setContent])
 
     const renderStories = () => {
-        return content.map(story => <Story title={story.title} text={story.story}></Story>)
+        return content.map(story => <Story title={story.title} text={story.story} storyUser={story.user} id={story._id}></Story>)
     }
 
     const createStoryView = () => {

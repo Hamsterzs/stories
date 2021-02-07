@@ -62,12 +62,19 @@ export const getStories = async () => {
 }
 
 export const createStory = async (title, story) => {
-    console.log({ title, story });
     const response = await (await fetch("/api/stories", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, story }),
 
+    })).json()
+
+    console.log(response);
+}
+
+export const deleteStory = async (id) => {
+    const response = await (await fetch(`/api/stories/${id}`, {
+        method: "DELETE",
     })).json()
 
     console.log(response);

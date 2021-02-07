@@ -1,12 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { StoryCard, Paraghraph, Title } from "./StoryElements"
-import { createStory } from "../../apiCalls"
+import { createStory, deleteStory } from "../../apiCalls"
+import { GlobalContext } from "../../context"
 
-const Story = ({ title, text }) => {
+
+const Story = ({ title, text, storyUser, id }) => {
     const [form, setForm] = useState({ title: "", story: "" })
+    const { user } = useContext(GlobalContext)
+
+    console.log(user.username, storyUser);
+
+    const deleteButton = user.username === storyUser ? <button onClick={() => deleteStory(id)}>Delete</button> : ""
 
     const render = title && text ? (
         <>
+            {deleteButton}
             <Title>{title}</Title>
             <Paraghraph>{text}</Paraghraph>
         </>
