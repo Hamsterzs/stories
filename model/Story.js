@@ -1,18 +1,24 @@
 const mongoose = require('mongoose')
 
 const storySchema = new mongoose.Schema({
-    user: {
+    title: {
         required: true,
-        type: String
+        type: String,
+        max: 50,
     },
     story: {
         required: true,
         type: String,
-        maxlength: 2500
+        maxlength: 2500,
     },
     date: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+    },
+    user: {
+        required: true,
+        type: String,
+        max: 50,
     }
 })
 

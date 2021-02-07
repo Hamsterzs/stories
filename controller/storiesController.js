@@ -14,6 +14,7 @@ exports.getStories = async (req, res) => {
 
 exports.getStoriesByUser = async (req, res) => {
     try {
+        if (!req.user) return res.status(400).json({ message: "sign in first dummy" })
         const stories = await Story.find({ user: req.params.user })
         stories.reverse()
         res.send(stories)
@@ -27,7 +28,7 @@ exports.postStory = async (req, res) => {
     try {
         if (!req.user) return res.status(400).json({ message: "sign in first dummy" })
 
-        const story = await Story.create({ user: req.user.username, story: req.body.story })
+        const story = await Story.create({ title: req.body.title, story: req.body.story, user: req.user.username })
         res.status(200).json({ message: "story created", story })
 
     } catch (error) {

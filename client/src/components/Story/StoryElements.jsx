@@ -33,10 +33,10 @@ export const Title = styled.div`
 
 export const Paraghraph = styled.div`
     font-size: 1.5rem;
-    width: 85%;
+    width: 90%;
     height: 95%;
 
-    overflow-y: scroll;
+    overflow-y: auto;
     &::-webkit-scrollbar {
         border-radius: 5px;
         width: 10px;

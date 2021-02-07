@@ -5,7 +5,7 @@ import Login from "../LoginBox/Login"
 import NavBarHook from "./NavBarHook"
 
 const NavBar = () => {
-    const { toggle, changeToggle, user, userFunction } = NavBarHook()
+    const { toggle, changeToggle, user, userFunction, homeFunction } = NavBarHook()
 
     return (
         <>
@@ -15,7 +15,7 @@ const NavBar = () => {
 
             <NavBarS>
                 <NavWrapper>
-                    <Logo>Stories</Logo>
+                    <Logo onClick={homeFunction}>Stories</Logo>
 
                     <UserContainer user={user} onClick={userFunction}>
                         <UserStyled />

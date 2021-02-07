@@ -1,11 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StoryCard, Paraghraph, Title } from "./StoryElements"
+import { createStory } from "../../apiCalls"
 
 const Story = ({ title, text }) => {
-    return (
-        <StoryCard>
+    const [form, setForm] = useState({ title: "", story: "" })
+
+    const render = title && text ? (
+        <>
             <Title>{title}</Title>
             <Paraghraph>{text}</Paraghraph>
+        </>
+    ) :
+        (
+            <>
+                <input type="text" onChange={e => setForm({ ...form, title: e.target.value })} value={form.title} />
+                <textarea name="" id="" cols="30" rows="10" onChange={e => setForm({ ...form, story: e.target.value })} value={form.story}></textarea>
+                <button onClick={() => createStory(form.title, form.story)}>Submit</button>
+            </>
+        )
+
+    return (
+        <StoryCard>
+            {render}
         </StoryCard>
     )
 }

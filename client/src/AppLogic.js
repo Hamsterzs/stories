@@ -1,9 +1,11 @@
-import { useEffect, useContext } from "react"
-import { GlobalContext } from "./context"
+import { useEffect, useContext, useState } from "react"
 import { Story } from "./components"
+import { GlobalContext } from "./context"
 
 const AppLogic = () => {
     const { user, setUser, content, setContent } = useContext(GlobalContext)
+
+    const [createToggle, setCreateToggle] = useState(false)
 
     useEffect(() => {
         const getUser = async () => {
@@ -34,10 +36,28 @@ const AppLogic = () => {
     }, [setUser, setContent])
 
     const renderStories = () => {
-        return content.map(story => <Story title={story.user} text={story.story}></Story>)
+        return content.map(story => <Story title={story.title} text={story.story}></Story>)
     }
 
-    return { user, setUser, renderStories }
+    const createStoryView = () => {
+        if (!createToggle) {
+            const newStory = <Story></Story>
+            setContent([newStory, ...content])
+            setCreateToggle(true)
+            return
+        } else {
+            console.log("in here");
+            const newContent = content
+            newContent.splice(0, 1)
+            console.log(newContent);
+            setContent(newContent)
+            setCreateToggle(false)
+        }
+    }
+
+
+
+    return { user, setUser, renderStories, createStoryView }
 }
 
 export default AppLogic

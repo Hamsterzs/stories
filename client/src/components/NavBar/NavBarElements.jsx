@@ -40,6 +40,8 @@ export const Logo = styled.h1`
     margin: 0;
     margin-bottom: 3px;
     font-weight: normal;
+    cursor: pointer;
+    
     @media (max-width: 768px){
         font-size: 2.5rem;
     }
