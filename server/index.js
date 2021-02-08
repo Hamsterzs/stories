@@ -5,26 +5,14 @@ const cors = require('cors')
 app.use(cors())
 app.use(express.json())
 
-const mongoose = require('mongoose')
-
-mongoose.set("useNewUrlParser", true);
-mongoose.set("useFindAndModify", false);
-mongoose.set("useCreateIndex", true);
-mongoose.set("useUnifiedTopology", true);
-
-try {
-    mongoose.connect("mongodb://127.0.0.1:27017/stories")
-    console.log("connected to the Database")
-} catch (err) {
-    console.log(err)
-}
+const dbConnection = require("../App/appConfig").connectToDB()
 
 const session = require("express-session")
 const MongoStore = require("connect-mongo")(session)
 
 app.use(session({
     secret: "session secret",
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    store: new MongoStore({ mongooseConnection: dbConnection }),
     resave: false,
     saveUninitialized: false,
 }))
@@ -41,7 +29,7 @@ app.use(passport.session());
 const logger = require("morgan")
 app.use(logger("dev"))
 
-const router = require("./routes/router")
+const router = require("./router")
 app.use("/api", router)
 
 app.listen(5000, () => {

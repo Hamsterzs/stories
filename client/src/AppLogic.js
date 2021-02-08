@@ -21,9 +21,9 @@ const AppLogic = () => {
 
         const getStories = async () => {
             let response = await (await fetch("/api/stories")).json()
-
-            if (response.length > 0) {
-                setContent(response)
+            console.log(response);
+            if (response.stories.length > 0) {
+                setContent(response.stories)
                 return
             } else {
                 return

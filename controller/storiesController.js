@@ -1,11 +1,10 @@
-const Story = require('../model/Story')
+const Story = require("../db/models/Story")
 
 exports.getStories = async (req, res) => {
     try {
         const stories = await Story.find()
         stories.reverse()
         res.send(stories)
-
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "internal server error", error: error })

@@ -1,6 +1,7 @@
 const router = require("express").Router()
 const userController = require("../controller/userController")
 const storiesController = require("../controller/storiesController")
+const stories = require("../App/stories")
 
 //              User Routes
 
@@ -32,7 +33,10 @@ router.get('/get-user', userController.getUser)
 
 //              Stories Routes
 
-router.get("/stories", storiesController.getStories)
+router.get("/stories", async (req, res) => {
+    const [status, response] = await stories.getAllStories()
+    res.status(status).json(response)
+})
 
 router.get("/stories/:user", storiesController.getStoriesByUser)
 
