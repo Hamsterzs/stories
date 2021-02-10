@@ -1,6 +1,6 @@
 const router = require("express").Router()
-const userController = require("../controller/userController")
 const stories = require("../App/stories")
+const users = require("../App/users")
 const { adaptRequest } = require("../App/helpers")
 
 //              User Routes
@@ -16,20 +16,27 @@ const authenticate = (req, res) => {
         }
         res.status(info.status).json({ user: user, message: info.message })
     })(req, res)
-
 }
 
-router.post("/sign-up",
-    userController.createUser,
-    authenticate,
-    userController.getUser
-)
+router.post("/sign-up", async (req, res) => {
+    const httpRequest = adaptRequest(req)
+    const { status, response } = await users.createUser(httpRequest)
+    res.status(status).json(response)
+})
 
 router.post("/sign-in", authenticate)
 
-router.post("/sign-out", userController.signOut)
+router.post("/sign-out", (req, res) => {
+    const httpRequest = adaptRequest(req)
+    const { status, response } = users.logOut(httpRequest)
+    res.status(status).json(response)
+})
 
-router.get('/get-user', userController.getUser)
+router.get('/get-user', (req, res) => {
+    const httpRequest = adaptRequest(req)
+    const { status, response } = users.getUser(httpRequest)
+    res.status(status).json(response)
+})
 
 //              Stories Routes
 

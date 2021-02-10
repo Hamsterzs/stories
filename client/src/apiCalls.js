@@ -7,6 +7,7 @@ export const signUp = async (username, password) => {
 
     return new Promise((resolve, reject) => {
         if (response) {
+            console.log(response);
             resolve(response)
         } else {
             reject({ message: "error" })

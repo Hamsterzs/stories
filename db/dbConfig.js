@@ -12,8 +12,6 @@ const configureDB = (mongoose) => {
         console.log(err)
         throw "database could not connect properly"
     }
-
-
 }
 
 module.exports = configureDB

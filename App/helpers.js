@@ -5,7 +5,9 @@ exports.adaptRequest = (req = {}) => {
         params: req.params,
         queryParams: req.query,
         body: req.body,
-        user: req.user
+        user: req.user,
+        session: req.session,
+        logOut: req.logOut,
     })
 }
 
@@ -14,7 +16,7 @@ exports.createResponse = (status, message, data = {}) => {
         status: status,
         response: {
             success: status === 200 ? true : false,
-            message: status !== 500 ? message : "internal server error",
+            message: status !== 500 ? message : "Internal Server Error",
             data: data,
         }
     }

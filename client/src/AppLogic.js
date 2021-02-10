@@ -11,24 +11,13 @@ const AppLogic = () => {
     useEffect(() => {
         const callGetUser = async () => {
             let response = await getUser()
-
-            if (response.user) {
-                setUser(response.user)
-                return
-            } else {
-                return
-            }
+            setUser(response?.data)
         }
 
         const setStories = async () => {
             let response = await getStories()
             console.log(response);
-            if (response.data.length > 0) {
-                setContent(response.data)
-                return
-            } else {
-                return
-            }
+            setContent(response.data)
         }
 
         callGetUser()

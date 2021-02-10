@@ -5,14 +5,13 @@ const cors = require('cors')
 app.use(cors())
 app.use(express.json())
 
-const dbConnection = require("../App/appConfig").connectToDB()
-
 const session = require("express-session")
-const MongoStore = require("connect-mongo")(session)
+const { createSessionStoreObject } = require("../App/appConfig")
+const sessionStorage = createSessionStoreObject(session)
 
 app.use(session({
     secret: "session secret",
-    store: new MongoStore({ mongooseConnection: dbConnection }),
+    store: sessionStorage,
     resave: false,
     saveUninitialized: false,
 }))

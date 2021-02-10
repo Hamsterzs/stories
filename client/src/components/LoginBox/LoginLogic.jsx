@@ -17,7 +17,6 @@ const LoginLogic = () => {
         if (response.user) {
             setUser(response.user)
         }
-        console.log(response.message);
     }
 
     const logOut = async () => {

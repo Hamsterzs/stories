@@ -1,5 +1,9 @@
 const db = require("../db/db")
 
-exports.connectToDB = () => {
-    return db.connectDB()
+exports.getDBConnection = () => {
+    return db.getDBConnection()
+}
+
+exports.createSessionStoreObject = (session) => {
+    return db.createSessionStorage(session)
 }
