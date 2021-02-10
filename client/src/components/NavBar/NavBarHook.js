@@ -13,14 +13,15 @@ export const Logic = () => {
 
     const homeFunction = async () => {
         const response = await getStories()
-        setContent(response)
+        setContent(response.data)
     }
 
     const userFunction = async () => {
         if (!user.username) changeToggle()
         else {
             const response = await getUserStories(user.username)
-            setContent(response)
+            console.log(response);
+            setContent(response.data)
         }
         return
     }

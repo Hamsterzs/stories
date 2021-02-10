@@ -1,6 +1,7 @@
 import { useEffect, useContext, useState } from "react"
 import { Story } from "./components"
 import { GlobalContext } from "./context"
+import { getStories, getUser } from "./apiCalls"
 
 const AppLogic = () => {
     const { user, setUser, content, setContent } = useContext(GlobalContext)
@@ -8,8 +9,8 @@ const AppLogic = () => {
     const [createToggle, setCreateToggle] = useState(false)
 
     useEffect(() => {
-        const getUser = async () => {
-            let response = await (await fetch("/api/get-user")).json()
+        const callGetUser = async () => {
+            let response = await getUser()
 
             if (response.user) {
                 setUser(response.user)
@@ -19,24 +20,24 @@ const AppLogic = () => {
             }
         }
 
-        const getStories = async () => {
-            let response = await (await fetch("/api/stories")).json()
+        const setStories = async () => {
+            let response = await getStories()
             console.log(response);
-            if (response.stories.length > 0) {
-                setContent(response.stories)
+            if (response.data.length > 0) {
+                setContent(response.data)
                 return
             } else {
                 return
             }
         }
 
-        getUser()
-        getStories()
+        callGetUser()
+        setStories()
 
     }, [setUser, setContent])
 
     const renderStories = () => {
-        return content.map(story => <Story title={story.title} text={story.story} storyUser={story.user} id={story._id}></Story>)
+        return content.map((story, index) => <Story title={story.title} text={story.story} storyUser={story.user} id={story._id} key={`Story${index}`}></Story>)
     }
 
     const createStoryView = () => {

@@ -43,10 +43,21 @@ export const signOut = async () => {
     })
 }
 
+export const getUser = async () => {
+    const response = await (await fetch(`/api/get-user`)).json()
+
+    return new Promise((resolve, reject) => {
+        console.log(response);
+        if (response) resolve(response)
+        else reject({ message: "error" })
+    })
+}
+
 export const getUserStories = async (user) => {
     const response = await (await fetch(`/api/stories/${user}`)).json()
 
     return new Promise((resolve, reject) => {
+        console.log(response);
         if (response) resolve(response)
         else reject({ message: "error" })
     })

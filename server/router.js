@@ -1,7 +1,7 @@
 const router = require("express").Router()
 const userController = require("../controller/userController")
-const storiesController = require("../controller/storiesController")
 const stories = require("../App/stories")
+const { adaptRequest } = require("../App/helpers")
 
 //              User Routes
 
@@ -34,15 +34,27 @@ router.get('/get-user', userController.getUser)
 //              Stories Routes
 
 router.get("/stories", async (req, res) => {
-    const [status, response] = await stories.getAllStories()
+    const { status, response } = await stories.getAllStories()
     res.status(status).json(response)
 })
 
-router.get("/stories/:user", storiesController.getStoriesByUser)
+router.get("/stories/:user", async (req, res) => {
+    const httpRequest = adaptRequest(req)
+    const { status, response } = await stories.getUserStories(httpRequest)
+    res.status(status).json(response)
+})
 
-router.post("/stories", storiesController.postStory)
+router.post("/stories", async (req, res) => {
+    const httpRequest = adaptRequest(req)
+    const { status, response } = await stories.postStory(httpRequest)
+    res.status(status).json(response)
 
-router.delete("/stories/:id", storiesController.deleteStory)
+})
 
+router.delete("/stories/:id", async (req, res) => {
+    const httpRequest = adaptRequest(req)
+    const { status, response } = await stories.deleteStory(httpRequest)
+    res.status(status).json(response)
+})
 
 module.exports = router

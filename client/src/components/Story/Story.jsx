@@ -8,8 +8,6 @@ const Story = ({ title, text, storyUser, id }) => {
     const [form, setForm] = useState({ title: "", story: "" })
     const { user } = useContext(GlobalContext)
 
-    console.log(user.username, storyUser);
-
     const deleteButton = user.username === storyUser ? <button onClick={() => deleteStory(id)}>Delete</button> : ""
 
     const render = title && text ? (
