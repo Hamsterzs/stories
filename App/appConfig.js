@@ -1,9 +1,9 @@
-const db = require("../db/db")
+const dbConfig = require("../db/dbConfig")
 
 exports.getDBConnection = () => {
-    return db.getDBConnection()
+    return dbConfig.getDBConnection()
 }
 
 exports.createSessionStoreObject = (session) => {
-    return db.createSessionStorage(session)
+    return dbConfig.createSessionStorage(session)
 }
