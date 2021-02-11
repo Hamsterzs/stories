@@ -17,13 +17,11 @@ app.use(session({
 }))
 
 // Configure passport middleware
-const passportConfig = require("./passportConfig")
-const passport = require("passport");
+const { getAuthenticationObject } = require("../App/appConfig")
+const authObject = getAuthenticationObject()
 
-passportConfig(passport)
-
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(authObject.initialize());
+app.use(authObject.session());
 
 const logger = require("morgan")
 app.use(logger("dev"))
