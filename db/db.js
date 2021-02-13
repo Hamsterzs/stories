@@ -81,7 +81,7 @@ exports.deleteStory = async (story) => {
 
 exports.findUserByUsername = async (username) => {
     try {
-        return await User.findOne({ user: username })
+        return await User.findOne({ username: username })
     } catch (error) {
         console.log(error);
         throw "Error while retrieving from database"
