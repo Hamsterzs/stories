@@ -4,8 +4,6 @@ module.exports = (passport) => {
     const bcrypt = require("bcrypt")
     const User = require("../db/models/User")
 
-    console.log("configuring passport");
-
     passport.use(new LocalStrategy({ usernameField: "username" },
         (username, password, done) => {
             User.findOne({ username: username }, async (err, user) => {

@@ -1,5 +1,5 @@
 const { createResponse } = require("./helpers")
-const db = require("../db/db")
+const { dbActions } = require("../App/appConfig")
 const bcrypt = require("bcrypt")
 
 exports.getUser = (req) => {
@@ -30,13 +30,13 @@ exports.createUser = async (req) => {
 
         if (!username || !password) return createResponse(400, "Fill in all fields")
 
-        const existingUser = await db.findUserByUsername(username)
+        const existingUser = await dbActions.findUserByUsername(username)
 
         if (existingUser) return createResponse(400, "Username is taken")
 
         const hashedPassword = await bcrypt.hash(password, 10)
 
-        const user = await db.createUser(username, hashedPassword)
+        const user = await dbActions.createUser(username, hashedPassword)
 
         return createResponse(200, "User Created", user)
 

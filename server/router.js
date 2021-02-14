@@ -33,9 +33,13 @@ router.post("/sign-out", (req, res) => {
 })
 
 router.get('/get-user', (req, res) => {
-    const httpRequest = adaptRequest(req)
-    const { status, response } = users.getUser(httpRequest)
-    res.status(status).json(response)
+    try {
+        const httpRequest = adaptRequest(req)
+        const { status, response } = users.getUser(httpRequest)
+        res.status(status).json(response)
+    } catch (error) {
+        res.status(500).json({ success: false, message: "server error" })
+    }
 })
 
 //              Stories Routes

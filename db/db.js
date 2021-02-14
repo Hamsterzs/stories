@@ -2,97 +2,108 @@ const Story = require("./models/Story")
 const User = require("./models/User")
 
 // Stories
+exports.makeDbActions = () => {
 
-exports.getAllStories = async () => {
-    try {
-        const stories = await Story.find()
-
-        stories.reverse()
-
-        return new Promise((resovle) => {
-            resovle(stories)
-        })
-
-    } catch (error) {
-        console.log(error);
-        throw "Could not retrieve stories"
+    const findUserByUsername = async (username) => {
+        try {
+            return await User.findOne({ username: username })
+        } catch (error) {
+            console.log(error);
+            throw "Error while retrieving from database"
+        }
     }
-}
 
-exports.getUserStories = async (username) => {
-    try {
-        const stories = await Story.find({ user: username })
-
-        stories.reverse()
-
-        return new Promise((resovle) => {
-            resovle(stories)
-        })
-
-    } catch (error) {
-        console.log(error);
-        throw "Could not retrieve stories"
+    const createUser = async (username, password) => {
+        try {
+            return await User.create({ username, password })
+        } catch (error) {
+            console.log(error);
+            throw "error while creating user"
+        }
     }
-}
 
-exports.createStory = async (storyToCreate) => {
-    try {
-        const story = await Story.create(storyToCreate)
+    const getAllStories = async () => {
+        try {
+            const stories = await Story.find()
 
-        return new Promise((resovle) => {
-            resovle(story)
-        })
+            stories.reverse()
 
-    } catch (error) {
-        console.log(error);
-        throw "could not create story"
+            return new Promise((resovle) => {
+                resovle(stories)
+            })
+
+        } catch (error) {
+            console.log(error);
+            throw "Could not retrieve stories"
+        }
     }
-}
 
-exports.findStoryById = async (id) => {
-    try {
-        const story = await Story.findById(id)
+    const createStory = async (storyToCreate) => {
+        try {
+            const story = await Story.create(storyToCreate)
 
-        return new Promise((resovle) => {
-            resovle(story)
-        })
+            return new Promise((resovle) => {
+                resovle(story)
+            })
 
-    } catch (error) {
-        console.log(error);
-        throw "could not find story"
+        } catch (error) {
+            console.log(error);
+            throw "could not create story"
+        }
     }
-}
 
-exports.deleteStory = async (story) => {
-    try {
-        await story.delete()
+    const findStoryById = async (id) => {
+        try {
+            const story = await Story.findById(id)
 
-        return new Promise((resovle) => {
-            resovle(story)
-        })
+            return new Promise((resovle) => {
+                resovle(story)
+            })
 
-    } catch (error) {
-        console.log(error);
-        throw "could not delete story"
+        } catch (error) {
+            console.log(error);
+            throw "could not find story"
+        }
     }
-}
 
-// Users
+    const deleteStory = async (story) => {
+        try {
+            await story.delete()
 
-exports.findUserByUsername = async (username) => {
-    try {
-        return await User.findOne({ username: username })
-    } catch (error) {
-        console.log(error);
-        throw "Error while retrieving from database"
+            return new Promise((resovle) => {
+                resovle(story)
+            })
+
+        } catch (error) {
+            console.log(error);
+            throw "could not delete story"
+        }
     }
-}
 
-exports.createUser = async (username, password) => {
-    try {
-        return await User.create({ username, password })
-    } catch (error) {
-        console.log(error);
-        throw "error while creating user"
+    const getUserStories = async (username) => {
+        try {
+            const stories = await Story.find({ user: username })
+
+            stories.reverse()
+
+            return new Promise((resovle) => {
+                resovle(stories)
+            })
+
+        } catch (error) {
+            console.log(error);
+            throw "Could not retrieve stories"
+        }
     }
+
+    return Object.freeze({
+        getAllStories,
+        getUserStories,
+        findStoryById,
+        createStory,
+        deleteStory,
+        findUserByUsername,
+        createUser,
+    })
+
 }
