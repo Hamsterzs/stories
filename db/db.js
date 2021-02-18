@@ -52,8 +52,8 @@ exports.makeDbActions = (database) => {
             const stories = await db
                 .collection("stories")
                 .find()
-                .limit(5)
-                .sort({ date: 1 })
+                .sort({ date: -1 })
+                .limit(15)
                 .toArray()
 
             return stories
@@ -127,9 +127,10 @@ exports.makeDbActions = (database) => {
             const stories = await db
                 .collection("stories")
                 .find({ user: username })
-                .limit(5)
                 .sort({ date: -1 })
+                .limit(15)
                 .toArray()
+
 
             return stories
 

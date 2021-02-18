@@ -22,7 +22,7 @@ exports.postStory = async (req) => {
 
         if (!req.user) return createResponse(400, "sign in first dummy")
 
-        const createdStory = await dbActions.createStory({ title, story, user: req.user.username })
+        const createdStory = await dbActions.createStory({ title, story, user: req.user.username, date: Date.now() })
 
         return createResponse(200, "Story created", createdStory)
 
