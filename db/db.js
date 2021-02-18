@@ -1,21 +1,26 @@
-const Story = require("./models/Story")
-const User = require("./models/User")
-
-// Stories
-exports.makeDbActions = () => {
-
+exports.makeDbActions = (database) => {
     const findUserByUsername = async (username) => {
         try {
-            return await User.findOne({ username: username })
+            const dbObject = await database
+            const db = dbObject.db
+            const user = await db
+                .collection("users")
+                .findOne({ username: username })
+
+            return user
         } catch (error) {
             console.log(error);
-            throw "Error while retrieving from database"
+            throw "Couldn't find user"
         }
     }
 
     const createUser = async (username, password) => {
         try {
-            return await User.create({ username, password })
+            const dbObject = await database
+            const db = dbObject.db
+
+            const user = await db.collection("users").insertOne({ username, password })
+            return user
         } catch (error) {
             console.log(error);
             throw "error while creating user"
@@ -24,13 +29,17 @@ exports.makeDbActions = () => {
 
     const getAllStories = async () => {
         try {
-            const stories = await Story.find()
+            const dbObject = await database
+            const db = dbObject.db
 
-            stories.reverse()
+            const stories = await db
+                .collection("stories")
+                .find()
+                .limit(5)
+                .sort({ date: -1 })
+                .toArray()
 
-            return new Promise((resovle) => {
-                resovle(stories)
-            })
+            return stories
 
         } catch (error) {
             console.log(error);
@@ -40,11 +49,14 @@ exports.makeDbActions = () => {
 
     const createStory = async (storyToCreate) => {
         try {
-            const story = await Story.create(storyToCreate)
+            const dbObject = await database
+            const db = dbObject.db
 
-            return new Promise((resovle) => {
-                resovle(story)
-            })
+            const story = await db
+                .collection("stories")
+                .insertOne(storyToCreate)
+
+            return story
 
         } catch (error) {
             console.log(error);
@@ -54,41 +66,55 @@ exports.makeDbActions = () => {
 
     const findStoryById = async (id) => {
         try {
-            const story = await Story.findById(id)
+            const dbObject = await database
+            const db = dbObject.db
 
-            return new Promise((resovle) => {
-                resovle(story)
-            })
+            const story = await db
+                .collection("stories")
+                .findOne(id)
+
+            if (!story) throw "could not find story"
+
+            return story
 
         } catch (error) {
             console.log(error);
-            throw "could not find story"
+            throw error
         }
     }
 
-    const deleteStory = async (story) => {
+    const deleteStory = async (id) => {
         try {
-            await story.delete()
+            const dbObject = await database
+            const db = dbObject.db
 
-            return new Promise((resovle) => {
-                resovle(story)
-            })
+            const story = await db
+                .collection("stories")
+                .findOneAndDelete(id)
+
+            if (!story) throw "could not delete story"
+
+            return story
 
         } catch (error) {
             console.log(error);
-            throw "could not delete story"
+            throw error
         }
     }
 
     const getUserStories = async (username) => {
         try {
-            const stories = await Story.find({ user: username })
+            const dbObject = await database
+            const db = dbObject.db
 
-            stories.reverse()
+            const stories = await db
+                .collection("stories")
+                .find({ user: username })
+                .limit(5)
+                .sort({ date: -1 })
+                .toArray()
 
-            return new Promise((resovle) => {
-                resovle(stories)
-            })
+            return stories
 
         } catch (error) {
             console.log(error);

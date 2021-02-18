@@ -1,11 +1,14 @@
-const dbConfig = require("../db/dbConfig")
 const passport = require("passport")
 const passportConfig = require("./passportConfig")
-const { connectToDB } = require("../db/dbConfig")
+const { makeDB } = require("../db/dbConfig")
 const { makeDbActions } = require("../db/db")
+const dbConfig = require("../db/dbConfig")
 
-db = connectToDB()
-exports.dbActions = makeDbActions()
+
+exports.db = makeDB()
+
+exports.dbActions = makeDbActions(this.db)
+
 
 passportConfig(passport)
 
@@ -14,6 +17,5 @@ exports.getAuthenticationObject = () => {
 }
 
 exports.createSessionStoreObject = (session) => {
-    return dbConfig.createSessionStorage(session, db)
+    return dbConfig.createSessionStorage(session)
 }
-

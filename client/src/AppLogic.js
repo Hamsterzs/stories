@@ -26,6 +26,8 @@ const AppLogic = () => {
     }, [setUser, setContent])
 
     const renderStories = () => {
+        console.log(content);
+        if (!content.length) return
         return content.map((story, index) => <Story title={story.title} text={story.story} storyUser={story.user} id={story._id} key={`Story${index}`}></Story>)
     }
 

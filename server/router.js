@@ -21,11 +21,7 @@ const authenticate = (req, res) => {
 router.post("/sign-up", async (req, res) => {
     const httpRequest = adaptRequest(req)
     const { status, response } = await users.createUser(httpRequest)
-    if (status === 200) {
-        authenticate(req, res)
-    } else {
-        res.status(status).json(response)
-    }
+    res.status(status).json(response)
 })
 
 router.post("/sign-in", authenticate)
