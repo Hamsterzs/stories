@@ -4,6 +4,7 @@ let MongoStore = require("connect-mongo")
 let mongoClient = null
 
 exports.makeDB = async (dbName = "stories") => {
+    console.log("making database");
     const MongoClient = mongodb.MongoClient
     const url = 'mongodb://localhost:27017'
     const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true })

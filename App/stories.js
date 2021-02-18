@@ -56,7 +56,7 @@ exports.deleteStory = async (req) => {
 
         if (story.user !== req.user.username) return createResponse(400, "Not Authorized")
 
-        await dbActions.deleteStory(story)
+        await dbActions.deleteStory(req.params.id)
 
         return createResponse(200, "Story deleted")
 

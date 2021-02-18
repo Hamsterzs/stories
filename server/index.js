@@ -5,16 +5,16 @@ const cors = require('cors')
 app.use(cors())
 app.use(express.json())
 
-// const session = require("express-session")
-// const MongoStore = require('connect-mongo')(session);
-// const client = require("../App/appConfig").db
+const session = require("express-session")
+const MongoStore = require('connect-mongo')(session);
+const client = require("../App/appConfig").db
 
-// app.use(session({
-//     secret: "session secret",
-//     store: new MongoStore({ clientPromise: client }),
-//     resave: false,
-//     saveUninitialized: false,
-// }))
+app.use(session({
+    secret: "session secret",
+    store: new MongoStore({ clientPromise: client }),
+    resave: false,
+    saveUninitialized: false,
+}))
 
 // Configure passport middleware
 const { getAuthenticationObject } = require("../App/appConfig")

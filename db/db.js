@@ -1,3 +1,5 @@
+const mongodb = require("mongodb")
+
 exports.makeDbActions = (database) => {
     const findUserByUsername = async (username) => {
         try {
@@ -14,12 +16,27 @@ exports.makeDbActions = (database) => {
         }
     }
 
+    const findUserById = async (id) => {
+        try {
+            const dbObject = await database
+            const db = dbObject.db
+            const user = await db
+                .collection("users")
+                .findOne({ "_id": mongodb.ObjectID(id) })
+            return user
+        } catch (error) {
+            console.log(error);
+            throw "Couldn't find user"
+        }
+    }
+
     const createUser = async (username, password) => {
         try {
             const dbObject = await database
             const db = dbObject.db
-
-            const user = await db.collection("users").insertOne({ username, password })
+            const user = await db
+                .collection("users")
+                .insertOne({ username, password })
             return user
         } catch (error) {
             console.log(error);
@@ -36,7 +53,7 @@ exports.makeDbActions = (database) => {
                 .collection("stories")
                 .find()
                 .limit(5)
-                .sort({ date: -1 })
+                .sort({ date: 1 })
                 .toArray()
 
             return stories
@@ -71,7 +88,7 @@ exports.makeDbActions = (database) => {
 
             const story = await db
                 .collection("stories")
-                .findOne(id)
+                .findOne({ "_id": mongodb.ObjectID(id) })
 
             if (!story) throw "could not find story"
 
@@ -90,7 +107,7 @@ exports.makeDbActions = (database) => {
 
             const story = await db
                 .collection("stories")
-                .findOneAndDelete(id)
+                .findOneAndDelete({ "_id": mongodb.ObjectID(id) })
 
             if (!story) throw "could not delete story"
 
@@ -130,6 +147,7 @@ exports.makeDbActions = (database) => {
         deleteStory,
         findUserByUsername,
         createUser,
+        findUserById
     })
 
 }
