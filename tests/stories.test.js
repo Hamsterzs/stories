@@ -1,6 +1,4 @@
-const { makeDB } = require("../db/dbConfig")
-
-describe("stories", () => {
+describe("create story", () => {
 
     it("runs a succesfull test", () => {
         expect(2).toEqual(2)

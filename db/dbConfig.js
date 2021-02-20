@@ -1,6 +1,6 @@
 const mongodb = require('mongodb')
-let MongoStore = require("connect-mongo")
 
+let MongoStore = require("connect-mongo")
 let mongoClient = null
 
 exports.makeDB = async (dbName = "stories") => {
