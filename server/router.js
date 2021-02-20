@@ -1,6 +1,5 @@
 const router = require("express").Router()
-const stories = require("../App/stories")
-const users = require("../App/users")
+const { stories, users } = require("../App/appConfig")
 const { adaptRequest } = require("../App/helpers")
 
 //              User Routes
