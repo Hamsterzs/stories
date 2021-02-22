@@ -95,8 +95,6 @@ exports.makeDbActions = (database) => {
                 .collection("stories")
                 .findOne({ "_id": mongodb.ObjectID(id) })
 
-            if (!story) throw "could not find story"
-
             return story
 
         } catch (error) {

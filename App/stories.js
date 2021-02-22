@@ -35,8 +35,6 @@ const makeStories = (db) => {
 
     const getUserStories = async (req) => {
         try {
-            if (!req.user) return createResponse(400, "sign in first dummy")
-
             const stories = await db.getUserStories(req.params.user)
 
             if (stories.length === 0) return createResponse(200, "There are no stories created yet", stories)
@@ -55,11 +53,13 @@ const makeStories = (db) => {
 
             const story = await db.findStoryById(req.params.id)
 
+            if (!story) return createResponse(400, "Story not found")
+
             if (story.user !== req.user.username) return createResponse(400, "Not Authorized")
 
             await db.deleteStory(req.params.id)
 
-            return createResponse(200, "Story deleted")
+            return createResponse(200, "Story Deleted")
 
         } catch (error) {
             console.log(error);

@@ -14,8 +14,6 @@ exports.makeDB = async (dbName = "stories") => {
 }
 
 exports.createSessionStorage = (session) => {
-    console.log("create session being called");
-    console.log(mongoClient);
     MongoStore = MongoStore(session)
     return new MongoStore({ clientPromise: mongoClient })
 }
