@@ -69,9 +69,14 @@ exports.makeDbActions = (database) => {
             const dbObject = await database
             const db = dbObject.db
 
-            const story = await db
+            const createdStory = await db
                 .collection("stories")
                 .insertOne(storyToCreate)
+
+
+            const story = await db
+                .collection("stories")
+                .findOne({ "_id": createdStory.insertedId })
 
             return story
 
