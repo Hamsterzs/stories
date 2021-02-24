@@ -1,6 +1,126 @@
 const mongodb = require("mongodb")
 
 exports.makeDbActions = (database) => {
+
+    // Story Actions
+
+    const createStory = async (storyToCreate) => {
+        try {
+            const dbObject = await database
+            const db = dbObject.db
+
+            const createdStory = await db
+                .collection("stories")
+                .insertOne(storyToCreate)
+
+
+            const story = await db
+                .collection("stories")
+                .findOne({ "_id": createdStory.insertedId })
+
+            return story
+
+        } catch (error) {
+            console.log(error);
+            throw "could not create story"
+        }
+    }
+
+    const deleteStory = async (id) => {
+        try {
+            const dbObject = await database
+            const db = dbObject.db
+
+            const story = await db
+                .collection("stories")
+                .findOneAndDelete({ "_id": mongodb.ObjectID(id) })
+
+            if (!story) throw "could not delete story"
+
+            return story
+
+        } catch (error) {
+            console.log(error);
+            throw error
+        }
+    }
+
+    const getAllStories = async () => {
+        try {
+            const dbObject = await database
+            const db = dbObject.db
+
+            const stories = await db
+                .collection("stories")
+                .find()
+                .sort({ date: -1 })
+                .limit(15)
+                .toArray()
+
+            return stories
+
+        } catch (error) {
+            console.log(error);
+            throw "Could not retrieve stories"
+        }
+    }
+
+    const getUserStories = async (username) => {
+        try {
+            const dbObject = await database
+            const db = dbObject.db
+
+            const stories = await db
+                .collection("stories")
+                .find({ user: username })
+                .sort({ date: -1 })
+                .limit(15)
+                .toArray()
+
+            return stories
+
+        } catch (error) {
+            console.log(error);
+            throw "Could not retrieve stories"
+        }
+    }
+
+    const findStoryById = async (id) => {
+        try {
+            const dbObject = await database
+            const db = dbObject.db
+
+            const story = await db
+                .collection("stories")
+                .findOne({ "_id": mongodb.ObjectID(id) })
+
+            return story
+
+        } catch (error) {
+            console.log(error);
+            throw error
+        }
+    }
+
+    // User Actions
+
+    const createUser = async (username, password) => {
+        try {
+            const dbObject = await database
+            const db = dbObject.db
+
+            const user = await db
+                .collection("users")
+                .insertOne({ username, password })
+
+            return user
+
+        } catch (error) {
+            console.log(error);
+            throw "error while creating user"
+        }
+    }
+
     const findUserByUsername = async (username) => {
         try {
             const dbObject = await database
@@ -30,127 +150,14 @@ exports.makeDbActions = (database) => {
         }
     }
 
-    const createUser = async (username, password) => {
-        try {
-            const dbObject = await database
-            const db = dbObject.db
-            const user = await db
-                .collection("users")
-                .insertOne({ username, password })
-            return user
-        } catch (error) {
-            console.log(error);
-            throw "error while creating user"
-        }
-    }
-
-    const getAllStories = async () => {
-        try {
-            const dbObject = await database
-            const db = dbObject.db
-
-            const stories = await db
-                .collection("stories")
-                .find()
-                .sort({ date: -1 })
-                .limit(15)
-                .toArray()
-
-            return stories
-
-        } catch (error) {
-            console.log(error);
-            throw "Could not retrieve stories"
-        }
-    }
-
-    const createStory = async (storyToCreate) => {
-        try {
-            const dbObject = await database
-            const db = dbObject.db
-
-            const createdStory = await db
-                .collection("stories")
-                .insertOne(storyToCreate)
-
-
-            const story = await db
-                .collection("stories")
-                .findOne({ "_id": createdStory.insertedId })
-
-            return story
-
-        } catch (error) {
-            console.log(error);
-            throw "could not create story"
-        }
-    }
-
-    const findStoryById = async (id) => {
-        try {
-            const dbObject = await database
-            const db = dbObject.db
-
-            const story = await db
-                .collection("stories")
-                .findOne({ "_id": mongodb.ObjectID(id) })
-
-            return story
-
-        } catch (error) {
-            console.log(error);
-            throw error
-        }
-    }
-
-    const deleteStory = async (id) => {
-        try {
-            const dbObject = await database
-            const db = dbObject.db
-
-            const story = await db
-                .collection("stories")
-                .findOneAndDelete({ "_id": mongodb.ObjectID(id) })
-
-            if (!story) throw "could not delete story"
-
-            return story
-
-        } catch (error) {
-            console.log(error);
-            throw error
-        }
-    }
-
-    const getUserStories = async (username) => {
-        try {
-            const dbObject = await database
-            const db = dbObject.db
-
-            const stories = await db
-                .collection("stories")
-                .find({ user: username })
-                .sort({ date: -1 })
-                .limit(15)
-                .toArray()
-
-
-            return stories
-
-        } catch (error) {
-            console.log(error);
-            throw "Could not retrieve stories"
-        }
-    }
-
     return Object.freeze({
+        createStory,
+        deleteStory,
         getAllStories,
         getUserStories,
         findStoryById,
-        createStory,
-        deleteStory,
-        findUserByUsername,
         createUser,
+        findUserByUsername,
         findUserById
     })
 

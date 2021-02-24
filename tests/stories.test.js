@@ -5,7 +5,7 @@ const database = makeDB("test")
 const dbActions = makeDbActions(database)
 const stories = makeStories(dbActions)
 
-describe("create story", () => {
+describe("creates a story", () => {
     beforeAll(async () => {
         const { db } = await database
         if (db.databaseName !== "test") throw "connect to testing database"
@@ -42,7 +42,7 @@ describe("create story", () => {
 
 })
 
-describe("delete story", () => {
+describe("deletes a story", () => {
     beforeAll(async () => {
         const { db } = await database
         if (db.databaseName !== "test") throw "connect to testing database"
