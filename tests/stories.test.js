@@ -1,8 +1,11 @@
 const { makeDB } = require("../db/dbConfig")
 const makeStories = require("../App/stories")
 const { makeDbActions } = require("../db/db")
+const Story = require("../db/models/Story")
+const User = require("../db/models/User")
+
 const database = makeDB("test")
-const dbActions = makeDbActions(database)
+const dbActions = makeDbActions(Story, User)
 const stories = makeStories(dbActions)
 
 describe("creates a story", () => {

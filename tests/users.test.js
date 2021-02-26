@@ -1,15 +1,18 @@
 const { makeDB } = require("../db/dbConfig")
 const { makeDbActions } = require("../db/db")
 const makeUsers = require("../App/users")
+const Story = require("../db/models/Story")
+const User = require("../db/models/User")
 
 const database = makeDB("test")
-const dbActions = makeDbActions(database)
+const dbActions = makeDbActions(Story, User)
 const users = makeUsers(dbActions)
 
 describe("create user", () => {
 
     beforeAll(async () => {
         const { db } = await database
+        console.log(db)
         if (db.databaseName !== "test") throw "connect to testing database"
         db.collection("users").drop()
     })
