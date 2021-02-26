@@ -7,11 +7,11 @@ app.use(express.json())
 
 const session = require("express-session")
 const MongoStore = require('connect-mongo')(session);
-const client = require("../App/appConfig").db
+const mongooseConnection = require("../App/appConfig").db
 
 app.use(session({
     secret: "session secret",
-    store: new MongoStore({ clientPromise: client }),
+    store: new MongoStore({ mongooseConnection: mongooseConnection }),
     resave: false,
     saveUninitialized: false,
 }))

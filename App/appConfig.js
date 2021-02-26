@@ -5,11 +5,13 @@ const { makeDbActions } = require("../db/db")
 const dbConfig = require("../db/dbConfig")
 const makeStories = require("./stories")
 const makeUsers = require('./users')
+const Story = require("../db/models/Story")
+const User = require("../db/models/User")
 
 
 exports.db = makeDB()
 
-exports.dbActions = makeDbActions(this.db)
+exports.dbActions = makeDbActions(Story, User)
 
 exports.stories = makeStories(this.dbActions)
 

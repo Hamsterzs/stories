@@ -1,24 +1,14 @@
 const mongodb = require("mongodb")
 
-exports.makeDbActions = (database) => {
+exports.makeDbActions = (Story, User) => {
 
     // Story Actions
 
     const createStory = async (storyToCreate) => {
         try {
-            const dbObject = await database
-            const db = dbObject.db
+            const createdStory = await Story.create(storyToCreate)
 
-            const createdStory = await db
-                .collection("stories")
-                .insertOne(storyToCreate)
-
-
-            const story = await db
-                .collection("stories")
-                .findOne({ "_id": createdStory.insertedId })
-
-            return story
+            return createdStory
 
         } catch (error) {
             console.log(error);
@@ -28,12 +18,8 @@ exports.makeDbActions = (database) => {
 
     const deleteStory = async (id) => {
         try {
-            const dbObject = await database
-            const db = dbObject.db
+            const story = await Story.findByIdAndDelete(id)
 
-            const story = await db
-                .collection("stories")
-                .findOneAndDelete({ "_id": mongodb.ObjectID(id) })
 
             if (!story) throw "could not delete story"
 
@@ -47,15 +33,10 @@ exports.makeDbActions = (database) => {
 
     const getAllStories = async () => {
         try {
-            const dbObject = await database
-            const db = dbObject.db
-
-            const stories = await db
-                .collection("stories")
+            const stories = await Story
                 .find()
                 .sort({ date: -1 })
                 .limit(15)
-                .toArray()
 
             return stories
 
@@ -67,15 +48,10 @@ exports.makeDbActions = (database) => {
 
     const getUserStories = async (username) => {
         try {
-            const dbObject = await database
-            const db = dbObject.db
-
-            const stories = await db
-                .collection("stories")
+            const stories = await Story
                 .find({ user: username })
                 .sort({ date: -1 })
                 .limit(15)
-                .toArray()
 
             return stories
 
@@ -87,18 +63,13 @@ exports.makeDbActions = (database) => {
 
     const findStoryById = async (id) => {
         try {
-            const dbObject = await database
-            const db = dbObject.db
-
-            const story = await db
-                .collection("stories")
-                .findOne({ "_id": mongodb.ObjectID(id) })
+            const story = await Story.findById(id)
 
             return story
 
         } catch (error) {
             console.log(error);
-            throw error
+            throw `Could not find story with id ${id}`
         }
     }
 
@@ -106,12 +77,7 @@ exports.makeDbActions = (database) => {
 
     const createUser = async (username, password) => {
         try {
-            const dbObject = await database
-            const db = dbObject.db
-
-            const user = await db
-                .collection("users")
-                .insertOne({ username, password })
+            const user = await User.create({ username, password })
 
             return user
 
@@ -121,14 +87,9 @@ exports.makeDbActions = (database) => {
         }
     }
 
-    const findUserByUsername = async (username) => {
+    const findUserById = async (id) => {
         try {
-            const dbObject = await database
-            const db = dbObject.db
-            const user = await db
-                .collection("users")
-                .findOne({ username: username })
-
+            const user = await User.findById(id)
             return user
         } catch (error) {
             console.log(error);
@@ -136,13 +97,10 @@ exports.makeDbActions = (database) => {
         }
     }
 
-    const findUserById = async (id) => {
+    const findUserByUsername = async (username) => {
         try {
-            const dbObject = await database
-            const db = dbObject.db
-            const user = await db
-                .collection("users")
-                .findOne({ "_id": mongodb.ObjectID(id) })
+            const user = await User.findOne({ username })
+
             return user
         } catch (error) {
             console.log(error);

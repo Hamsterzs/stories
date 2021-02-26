@@ -1,21 +1,26 @@
-const mongodb = require('mongodb')
+const mongoose = require("mongoose");
 
-let MongoStore = require("connect-mongo")
-let mongoClient = null
+exports.makeDB = (dbName = "stories") => {
 
-exports.makeDB = async (dbName = "stories") => {
-    console.log("making database");
-    const MongoClient = mongodb.MongoClient
-    const url = 'mongodb://localhost:27017'
-    const client = new MongoClient(url, { useNewUrlParser: true })
-    await client.connect()
-    const db = await client.db(dbName)
-    return { db, client }
+    try {
+
+        mongoose.set("useNewUrlParser", true);
+        mongoose.set("useFindAndModify", false);
+        mongoose.set("useCreateIndex", true);
+        mongoose.set("useUnifiedTopology", true);
+
+        mongoose.connect(`mongodb://localhost:27017/${dbName}`);
+
+        mongoose.connection.once("open", () => {
+            console.log("connected to db");
+        })
+
+        return mongoose.connection
+
+    } catch (err) {
+        console.log(err);
+    }
 }
 
-exports.createSessionStorage = (session) => {
-    MongoStore = MongoStore(session)
-    return new MongoStore({ clientPromise: mongoClient })
-}
 
 

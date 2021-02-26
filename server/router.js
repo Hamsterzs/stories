@@ -20,7 +20,8 @@ const authenticate = (req, res) => {
 router.post("/sign-up", async (req, res) => {
     const httpRequest = adaptRequest(req)
     const { status, response } = await users.createUser(httpRequest)
-    res.status(status).json(response)
+    if (!response.success) return res.status(status).json(response)
+    authenticate(req, res)
 })
 
 router.post("/sign-in", authenticate)
