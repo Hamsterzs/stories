@@ -12,7 +12,7 @@ exports.makeDB = (dbName = "stories") => {
         mongoose.connect(`mongodb://localhost:27017/${dbName}`);
 
         mongoose.connection.once("open", () => {
-            console.log("connected to db");
+            if (dbName !== "test") console.log("connected to db");
         })
 
         return mongoose.connection

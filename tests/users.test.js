@@ -9,12 +9,13 @@ const dbActions = makeDbActions(Story, User)
 const users = makeUsers(dbActions)
 
 describe("create user", () => {
+    afterEach(async () => {
+        await User.deleteMany({})
+    })
 
-    beforeAll(async () => {
-        const { db } = await database
-        console.log(db)
-        if (db.databaseName !== "test") throw "connect to testing database"
-        db.collection("users").drop()
+    afterAll(async () => {
+        const db = await database
+        await db.close()
     })
 
     it("requires all fields to be filled in", async () => {
