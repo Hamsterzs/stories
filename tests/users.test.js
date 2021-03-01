@@ -1,22 +1,10 @@
-const { makeDB } = require("../db/dbConfig")
-const { makeDbActions } = require("../db/db")
+const makeFakeDB = require("./helpers/makeFakeDB")
 const makeUsers = require("../App/users")
-const Story = require("../db/models/Story")
-const User = require("../db/models/User")
 
-const database = makeDB("test")
-const dbActions = makeDbActions(Story, User)
+const dbActions = makeFakeDB()
 const users = makeUsers(dbActions)
 
 describe("create user", () => {
-    afterEach(async () => {
-        await User.deleteMany({})
-    })
-
-    afterAll(async () => {
-        const db = await database
-        await db.close()
-    })
 
     it("requires all fields to be filled in", async () => {
         const reqOne = { body: { username: "abel" } }
@@ -39,7 +27,7 @@ describe("create user", () => {
     })
 
     it("denies duplicate username", async () => {
-        const req = { body: { username: "abel", password: "abel123" } }
+        const req = { body: { username: "abel2", password: "abel123" } }
 
         await users.createUser(req)
         const { response } = await users.createUser(req)

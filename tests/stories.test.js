@@ -1,24 +1,12 @@
-const { makeDB } = require("../db/dbConfig")
 const makeStories = require("../App/stories")
-const { makeDbActions } = require("../db/db")
-const Story = require("../db/models/Story")
-const User = require("../db/models/User")
+const makeFakeDB = require("./helpers/makeFakeDB")
 
-const database = makeDB("test")
-const dbActions = makeDbActions(Story, User)
+const dbActions = makeFakeDB()
 const stories = makeStories(dbActions)
 
 describe("stories", () => {
 
-    afterAll(async () => {
-        const db = await database
-        await db.close()
-    })
-
     describe("creates a story", () => {
-        afterEach(async () => {
-            await Story.deleteMany({})
-        })
 
         it("requires a title", async () => {
             const req = { body: { story: "this is a test story" } }
@@ -43,13 +31,9 @@ describe("stories", () => {
             const { response } = await stories.postStory(req)
             expect(response.success).toBe(true)
         })
-
     })
 
     describe("deletes a story", () => {
-        afterEach(async () => {
-            await Story.deleteMany({})
-        })
         it("requires a user to be signed in", async () => {
             const req = {}
             const { response } = await stories.deleteStory(req)
@@ -89,21 +73,9 @@ describe("stories", () => {
         })
 
         it("deletes a story", async () => {
-            const postReq = {
-                body: {
-                    title: "this is a test story",
-                    story: "sad",
-                },
-                user: { username: "a" }
-            }
-
-            let postResponse = await stories.postStory(postReq)
-            postResponse = postResponse.response
-
-
             const deleteReq = {
-                params: { id: postResponse.data._id },
-                user: { username: "a" }
+                params: { id: "fake id" },
+                user: { username: "fake user" }
             }
 
             const { response } = await stories.deleteStory(deleteReq)
@@ -112,44 +84,4 @@ describe("stories", () => {
 
         })
     })
-
-    describe("gets stories", () => {
-        afterEach(async () => {
-            await Story.deleteMany({})
-        })
-
-        it("gets all stories", async () => {
-            const postReq = { body: { title: "this is a test story for all", story: "sad" }, user: { username: "a" } }
-            const postReqTwo = { body: { title: "this is a test story for all", story: "sad" }, user: { username: "b" } }
-
-            await stories.postStory(postReq)
-            await stories.postStory(postReqTwo)
-
-            const { response } = await stories.getAllStories()
-
-            expect(response.data.length).toBe(2)
-        })
-
-        it("gets user stories", async () => {
-            const postReq = { body: { title: "this is a test story", story: "sad" }, user: { username: "a" } }
-            const postReqTwo = { body: { title: "this is a test story", story: "sad" }, user: { username: "b" } }
-
-            await stories.postStory(postReq)
-            await stories.postStory(postReqTwo)
-
-            const req = { params: { user: "b" } }
-            const { response } = await stories.getUserStories(req)
-
-            let pass = true
-
-            response.data.forEach(story => {
-                if (story.user !== "b") pass = false
-            })
-
-            expect(pass).toBe(true)
-        })
-
-
-    })
-
 })
