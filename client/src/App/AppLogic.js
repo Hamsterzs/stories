@@ -1,7 +1,7 @@
 import { useEffect, useContext, useState } from "react"
-import { Story } from "./components"
-import { GlobalContext } from "./context"
-import { getStories, getUser } from "./apiCalls"
+import { Story } from "../components"
+import { GlobalContext } from "../context"
+import { getStories, getUser } from "../apiCalls"
 
 const AppLogic = () => {
     const { user, setUser, content, setContent } = useContext(GlobalContext)

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavBar } from "./components"
+import { NavBar } from "../components"
 import './App.css'
 import AppLogic from "./AppLogic"
 import { StoriesContainer, AddButton } from './AppElements';

@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavBar as NavBarS, NavWrapper, Logo, UserContainer, UserStyled } from "./NavBarElements"
 import { ExtendedNav, ArrowStyled, ArrowContainer } from "./NavBarElements"
-import Login from "../LoginBox/Login"
+import Login from "./LoginBox/Login"
 import NavBarHook from "./NavBarHook"
 
 const NavBar = () => {

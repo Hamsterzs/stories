@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
-import { signUp, signIn, signOut } from "../../apiCalls"
-import { GlobalContext } from "../../context"
+import { signUp, signIn, signOut } from "../../../apiCalls"
+import { GlobalContext } from "../../../context"
 
 const LoginLogic = () => {
     const [operation, setOperation] = useState("home")
