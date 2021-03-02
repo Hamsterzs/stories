@@ -34,6 +34,7 @@ describe("stories", () => {
     })
 
     describe("deletes a story", () => {
+
         it("requires a user to be signed in", async () => {
             const req = {}
             const { response } = await stories.deleteStory(req)

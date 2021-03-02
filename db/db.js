@@ -1,5 +1,3 @@
-const mongodb = require("mongodb")
-
 exports.makeDbActions = (Story, User) => {
 
     // Story Actions
