@@ -76,4 +76,3 @@ const makeStories = (db) => {
 }
 
 module.exports = makeStories
-

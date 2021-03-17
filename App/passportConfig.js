@@ -1,8 +1,8 @@
-module.exports = (passport) => {
+module.exports = (passport, dbActions) => {
     // Passport Local strategy
     const LocalStrategy = require('passport-local').Strategy
     const bcrypt = require("bcrypt")
-    const { dbActions } = require("../App/appConfig")
+
 
     passport.use(new LocalStrategy({ usernameField: "username" },
         async (username, password, done) => {

@@ -2,27 +2,26 @@ const passport = require("passport")
 const passportConfig = require("./passportConfig")
 const { makeDB } = require("../db/dbConfig")
 const { makeDbActions } = require("../db/db")
-const dbConfig = require("../db/dbConfig")
 const makeStories = require("./stories")
 const makeUsers = require('./users')
 const Story = require("../db/models/Story")
 const User = require("../db/models/User")
 
+module.exports = (enviroment) => {
+    const dbName = enviroment === "test" ? enviroment : undefined
+    const db = makeDB(dbName)
 
-exports.db = makeDB()
+    dbActions = makeDbActions(Story, User)
 
-exports.dbActions = makeDbActions(Story, User)
+    stories = makeStories(dbActions)
 
-exports.stories = makeStories(this.dbActions)
+    users = makeUsers(dbActions)
 
-exports.users = makeUsers(this.dbActions)
+    passportConfig(passport, dbActions)
 
-passportConfig(passport)
-
-exports.getAuthenticationObject = () => {
-    return passport
-}
-
-exports.createSessionStoreObject = (session) => {
-    return dbConfig.createSessionStorage(session)
+    return {
+        appActions: { stories, users },
+        dbConnection: db,
+        authObject: passport
+    }
 }

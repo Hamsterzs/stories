@@ -1,7 +1,7 @@
-const { makeDB } = require("../db/dbConfig")
-const { makeDbActions } = require("../db/db")
-const Story = require("../db/models/Story")
-const User = require("../db/models/User")
+const { makeDB } = require("../../db/dbConfig")
+const { makeDbActions } = require("../../db/db")
+const Story = require("../../db/models/Story")
+const User = require("../../db/models/User")
 
 const database = makeDB("test")
 const dbActions = makeDbActions(Story, User)

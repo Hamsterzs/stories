@@ -1,5 +1,5 @@
-const makeFakeDB = require("./helpers/makeFakeDB")
-const makeUsers = require("../App/users")
+const makeFakeDB = require("../helpers/makeFakeDB")
+const makeUsers = require("../../App/users")
 
 const dbActions = makeFakeDB()
 const users = makeUsers(dbActions)
