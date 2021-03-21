@@ -8,7 +8,7 @@ const Story = require("../db/models/Story")
 const User = require("../db/models/User")
 
 module.exports = (enviroment) => {
-    const dbName = enviroment === "test" ? enviroment : undefined
+    const dbName = enviroment
     const db = makeDB(dbName)
 
     dbActions = makeDbActions(Story, User)
